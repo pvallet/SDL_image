@@ -4,7 +4,7 @@ project(SDL_image C)
 if (ANDROID)
 
 else()
-    find_package(SDL2 REQUIRED)
+    # find_package(SDL2 REQUIRED)
 endif()
 
 option(SUPPORT_JPG "Support loading JPEG images" ON)
@@ -52,7 +52,7 @@ target_include_directories(SDL2_image PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 if (ANDROID)
     target_link_libraries(SDL2_image PRIVATE SDL2)
 else()
-    target_link_libraries(SDL2_image PRIVATE SDL2::SDL2)
+    target_link_libraries(SDL2_image PRIVATE SDL2)
 endif()
 
 if(BUILD_SHOWIMAGE)
