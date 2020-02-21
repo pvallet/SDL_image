@@ -22,6 +22,15 @@ target_compile_definitions(SDL2_image PRIVATE
 		-DLOAD_BMP -DLOAD_GIF -DLOAD_LBM -DLOAD_PCX -DLOAD_PNM
 		-DLOAD_TGA -DLOAD_XCF -DLOAD_XPM -DLOAD_XV -DLOAD_XPM)
 
+if (APPLE)
+	target_sources(SDL2_image PRIVATE
+	    IMG_ImageIO.m
+	)
+	target_compile_options(SDL2_image BEFORE PRIVATE
+	    "-x" "objective-c"
+	)
+endif()
+
 if (SUPPORT_JPG)
 	target_compile_definitions(SDL2_image PRIVATE -DLOAD_JPG)
 	add_subdirectory(external/jpeg-9c)
