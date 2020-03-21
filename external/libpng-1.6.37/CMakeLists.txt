@@ -747,7 +747,7 @@ if(PNG_TESTS AND PNG_SHARED)
   png_add_test(NAME pngimage-full COMMAND pngimage OPTIONS --exhaustive --list-combos --log FILES ${PNGSUITE_PNGS})
 endif()
 
-if(PNG_SHARED)
+if(FALSE) # (PNG_SHARED)
   add_executable(pngfix ${pngfix_sources})
   target_link_libraries(pngfix png)
   set(PNG_BIN_TARGETS pngfix)
