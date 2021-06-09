@@ -7,6 +7,7 @@ else()
     # find_package(SDL2 REQUIRED)
 endif()
 
+option(SDL_IMAGE_STATIC_DEPS "Link all required libraries statically" OFF)
 option(SUPPORT_JPG "Support loading JPEG images" ON)
 option(SUPPORT_PNG "Support loading PNG images" ON)
 option(SUPPORT_WEBP "Support loading WEBP images" OFF)
@@ -42,10 +43,27 @@ if (SUPPORT_PNG)
 	set(HAVE_LD_VERSION_SCRIPT OFF CACHE BOOL "" FORCE)
 	target_compile_definitions(SDL2_image PRIVATE -DLOAD_PNG)
 
+	# To make libpng build correctly
+	set(ZLIB_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/SDL2_image/external/zlib-1.2.11)
+
+	if (SDL_IMAGE_STATIC_DEPS)
+		set(ZLIB_LIBRARY zlibstatic)
+		set(ZLIB_SHARED OFF CACHE BOOL "Build static lib")
+		set(PNG_LIBRARY png_static)
+		set(PNG_SHARED OFF CACHE BOOL "Build static lib")
+	else()
+		set(ZLIB_LIBRARY zlib)
+		set(ZLIB_STATIC OFF CACHE BOOL "Build static lib")
+		set(PNG_LIBRARY png)
+		set(PNG_STATIC OFF CACHE BOOL "Build static lib")
+	endif()
+  
+	set(PNG_TESTS  OFF CACHE BOOL "Build libpng tests")
+
 	add_subdirectory(external/zlib-1.2.11)
 	add_subdirectory(external/libpng-1.6.37)
 	include_directories(external/libpng-1.6.37)
-	target_link_libraries(SDL2_image PRIVATE png)
+	target_link_libraries(SDL2_image PRIVATE ${PNG_LIBRARY})
 endif()
 
 if (SUPPORT_WEBP)
