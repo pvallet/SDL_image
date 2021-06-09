@@ -44,13 +44,13 @@ if (SUPPORT_PNG)
 	target_compile_definitions(SDL2_image PRIVATE -DLOAD_PNG)
 
 	# To make libpng build correctly
-	set(ZLIB_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/SDL2_image/external/zlib-1.2.11)
+	set(ZLIB_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/external/zlib-1.2.11)
 
 	if (SDL_IMAGE_STATIC_DEPS)
 		set(ZLIB_LIBRARY zlibstatic)
-		set(ZLIB_SHARED OFF CACHE BOOL "Build static lib")
+		set(ZLIB_SHARED OFF CACHE BOOL "Build shared lib")
 		set(PNG_LIBRARY png_static)
-		set(PNG_SHARED OFF CACHE BOOL "Build static lib")
+		set(PNG_SHARED OFF CACHE BOOL "Build shared lib")
 	else()
 		set(ZLIB_LIBRARY zlib)
 		set(ZLIB_STATIC OFF CACHE BOOL "Build static lib")
